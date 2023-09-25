@@ -5,7 +5,8 @@ import pandas as pd
 
 
 # %%
-## Data Import
+## Data Import (csv files here are huge, you can download them from https://divvybikes.com/system-data 
+# and just change the csv names to get the name consistencies)
 divvy_202201 = pd.read_csv("divvy_tripdata_202201.csv")
 divvy_202202 = pd.read_csv("divvy_tripdata_202202.csv")
 divvy_202203 = pd.read_csv("divvy_tripdata_202203.csv")
