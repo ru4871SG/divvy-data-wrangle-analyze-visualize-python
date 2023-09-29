@@ -5,8 +5,8 @@ import pandas as pd
 
 
 # %%
-## Data Import (csv files here are huge, you can download them from https://divvybikes.com/system-data 
-# and just change the csv names to get the name consistencies)
+## Data Import (original csv files here are huge, you can download them from https://divvybikes.com/system-data 
+# and just change the csv names for consistency)
 divvy_202201 = pd.read_csv("divvy_tripdata_202201.csv")
 divvy_202202 = pd.read_csv("divvy_tripdata_202202.csv")
 divvy_202203 = pd.read_csv("divvy_tripdata_202203.csv")
@@ -168,6 +168,9 @@ divvy_2022_analysis_1 = divvy_2022_cleaned_5.copy()
 # Let's create the month column for later analysis
 divvy_2022_analysis_1['month'] = pd.to_datetime(divvy_2022_analysis_1['started_at']).dt.month
 
+# Let's create the hour column for later analysis
+divvy_2022_analysis_1['hour'] = pd.to_datetime(divvy_2022_analysis_1['started_at']).dt.hour
+
 # Boolean Masking for Separating Members and Casuals
 mask_1 = divvy_2022_analysis_1['member_casual'] == 'member'
 mask_2 = divvy_2022_analysis_1['member_casual'] == 'casual'
@@ -254,17 +257,6 @@ day_of_week_count = divvy_2022_analysis_1.groupby(['day_of_week', 'member_casual
                                             .reset_index(name='count') \
                                             .sort_values(by='count', ascending=False)
 
-# Refactor the day_of_week column to show the actual day name using map()
-#This is not really needed, I do this just to make it easier to check the day names at a quick glance
-day_of_week_count['day_name'] = day_of_week_count['day_of_week'].map({
-    0: 'Monday',
-    1: 'Tuesday',
-    2: 'Wednesday',
-    3: 'Thursday',
-    4: 'Friday',
-    5: 'Saturday',
-    6: 'Sunday'
-})
 
 # Let’s analyze the most popular months and the most popular days for each month (members only)
 popular_month_count_member = only_members.groupby(['month', 'day_of_week']) \
@@ -279,4 +271,84 @@ popular_month_count_casual = only_casuals.groupby(['month', 'day_of_week']) \
                                               .sort_values(by='count', ascending=False)
                                               
                                               
-#### SAMPE SINI, Analyze Most Popular Hours of the Day BELUM
+# %%
+
+## Data Analysis Part 5 - Most Popular Hours
+
+# Let's analyze the most popular hours (grouped by hour and member_casual)
+popular_hours_count = divvy_2022_analysis_1.groupby(['hour', 'member_casual']) \
+                                              .size() \
+                                              .reset_index(name='count') \
+                                              .sort_values(by='count', ascending=False)
+    
+                                              
+# %%                                          
+
+## Data Analysis Part 6 - Analyze Ride Length Difference Between Casuals and Members
+ride_length_avg = divvy_2022_analysis_1.assign(ride_length_in_minutes=divvy_2022_analysis_1['ride_length'] / 60) \
+                                        .groupby('member_casual') \
+                                        .agg(avg_ride_length_in_minutes=('ride_length_in_minutes', 'mean')) \
+                                        .reset_index()
+
+
+# %%
+
+## Data Analysis Part 7 - Bike Types Analysis - Members & Casuals
+
+rideable_type_count_member = (only_members.groupby(['rideable_type', 'member_casual']) \
+                       .size().reset_index(name='count').sort_values(by='count', ascending=False))
+    
+rideable_type_count_casual = (only_casuals.groupby(['rideable_type', 'member_casual']) \
+                           .size().reset_index(name='count').sort_values(by='count', ascending=False))
+    
+
+# %%
+
+## For Map Visualization of the Station Names (Part 2 and Part 3 Above), we need to get the latitude and longitude
+
+# Get the .csv file from here: https://data.cityofchicago.org
+divvy_bicycle_stations = pd.read_csv("divvy_bicycle_stations.csv")
+
+# Let's clean up the station names, just like before, but for the new csv file
+divvy_bicycle_stations['Station Name'] = divvy_bicycle_stations['Station Name'] \
+                                                .str.replace('\\*', '', regex=True) \
+                                                .str.replace('\\(Temp\\)', '', regex=True) \
+                                                .str.replace('\\ - Charging', '', regex=True)
+
+divvy_bicycle_stations = divvy_bicycle_stations.applymap(lambda x: x.strip() \
+                                                     if isinstance(x, str) else x)
+    
+# %%
+
+## Merge the latitude and longitude data with our station_name_count_member and station_name_count_casual
+station_name_count_member_w_location_pre_cleaned  = pd.merge(station_name_count_member, divvy_bicycle_stations, \
+                                                    how='left', left_on='station_name', \
+                                                        right_on='Station Name')\
+                                                        .drop(columns=['Station Name', 'Total Docks', \
+                                                                       'Docks in Service', 'Status'])
+                                                            
+station_name_count_casual_w_location_pre_cleaned  = pd.merge(station_name_count_casual, divvy_bicycle_stations, \
+                                                    how='left', left_on='station_name', \
+                                                        right_on='Station Name')\
+                                                        .drop(columns=['Station Name', 'Total Docks', \
+                                                                       'Docks in Service', 'Status'])
+                                                            
+# NOTE: You can fill missing latitude and longitude data manually if you want to
+
+# Let's delete rows with empty locations
+station_name_count_member_w_location = station_name_count_member_w_location_pre_cleaned.dropna(subset=['Location'])
+station_name_count_casual_w_location = station_name_count_casual_w_location_pre_cleaned.dropna(subset=['Location'])
+
+
+# %% 
+
+## Export Dataframes to Pickles, so we can use them with app.py
+day_of_week_count.to_pickle('day_of_week_count.pkl')
+popular_month_count_member.to_pickle('popular_month_count_member.pkl')
+popular_month_count_casual.to_pickle('popular_month_count_casual.pkl')
+popular_hours_count.to_pickle('popular_hours_count.pkl')
+ride_length_avg.to_pickle('ride_length_avg.pkl')
+rideable_type_count_member.to_pickle('rideable_type_count_member.pkl')
+rideable_type_count_casual.to_pickle('rideable_type_count_casual.pkl')
+station_name_count_member_w_location.to_pickle('station_name_count_member_w_location.pkl')
+station_name_count_casual_w_location.to_pickle('station_name_count_casual_w_location.pkl')
