@@ -429,7 +429,8 @@ def bike_types():
 ## Sidebar menu
 selection_menu = st.sidebar.radio(
     'Choose a Specific Report:',
-    ('All', 'Popular Hours', 'Popular Days', 'Popular Months', 'Popular Stations', 'Average Ride Length', 'Bike Types')
+    ('All', 'Popular Hours', 'Popular Days', 'Popular Months', 'Popular Stations', \
+     'Average Ride Length', 'Bike Types')
 )
 
 ## Display selected charts using the custom functions for chart displays, and put additional titles and notes
@@ -438,8 +439,8 @@ if selection_menu == 'All':
     st.markdown("*by: Ruddy Setiadi Gunawan*")
     st.markdown("""
     I used Divvy Bikes public data (https://divvybikes.com/system-data) to create this analysis report. \
-        The goal of this report is to analyze the differences between members and casual riders throughout the year of \
-            2022.
+        The goal of this report is to analyze the differences between members and casual riders throughout \
+            the year of 2022.
     
     
     The original data has been made available under this license: https://divvybikes.com/data-license-agreement
@@ -447,8 +448,9 @@ if selection_menu == 'All':
     
     Divvy trip datasets from January 2022 to December 2022 were used, cleaned, transformed and analyzed using Python \
         libraries like ***numpy*** and ***pandas***. As for the data visualizations below, ***bokeh*** and ***pydeck*** \
-            were used (all visualizations here are interactive). If you want to check how I cleaned and transformed the original data, you can check my github \
-                repo here. I also have the Python script for the visualizations in the same github repo.
+            were used (all visualizations here are interactive). If you want to check how I cleaned and transformed the \
+                original data, you can check my [github repo here](https://github.com/ru4871SG/divvy-data-wrangle-analyze-visualize-python). I also have the Python script for the visualizations in \
+                    the same github repo.
         """)
 
     st.header("Data Analysis Report:")
