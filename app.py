@@ -109,7 +109,7 @@ def viz_popular_month_count_casual(sizing_mode="fixed"):
 
 def viz_day_of_week_count(sizing_mode="fixed"):
     ## map day_of_week where Monday is 0 and Sunday is 6
-    day_mapping = {0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'}
+    day_mapping = {0: 'Mon', 1: 'Tue', 2: 'Wed', 3: 'Thu', 4: 'Fri', 5: 'Sat', 6: 'Sun'}
     
     sorted_data = day_of_week_count.sort_values(by=['day_of_week', 'member_casual'])
     
