@@ -421,8 +421,8 @@ def average_ride_length():
     
 def bike_types():
     st.subheader("Bike Types")
-    st.bokeh_chart(viz_rideable_type_count_member(sizing_mode="scale_width"))
     st.bokeh_chart(viz_rideable_type_count_casual(sizing_mode="scale_width"))
+    st.bokeh_chart(viz_rideable_type_count_member(sizing_mode="scale_width"))
     
     st.markdown("""
     There is a difference between casuals and members when it comes to bike types. Members like classic bikes much \
