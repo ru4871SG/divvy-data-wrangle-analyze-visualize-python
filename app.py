@@ -446,7 +446,7 @@ if selection_menu == 'All':
     The original data has been made available under this license: https://divvybikes.com/data-license-agreement
     
     
-    Divvy trip datasets from January 2022 to December 2022 were used, cleaned, transformed and analyzed using Python \
+    Divvy trip data from January 2022 to December 2022 were cleaned, transformed and analyzed using Python \
         libraries like ***numpy*** and ***pandas***. As for the data visualizations below, ***bokeh*** and ***pydeck*** \
             were used (all visualizations here are interactive). If you want to check how I cleaned and transformed the \
                 original data, you can check my [github repo here](https://github.com/ru4871SG/divvy-data-wrangle-analyze-visualize-python). I also have the Python script for the visualizations in \
