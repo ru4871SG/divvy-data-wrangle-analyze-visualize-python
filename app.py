@@ -320,7 +320,10 @@ def viz_pydeck_map(data, num_colors=10):
         layers=[layer], 
         initial_view_state=view_state, 
         map_style="light",
-        tooltip={"html": "<b>{station_name}</b><br>Total Count: {count_total}"}
+        tooltip={
+                "html": "<div style='font-size: 13px;'><b>{station_name}</b><br>\
+                    Total Count: {count_total}</div>"
+            }
     )
 
 

@@ -212,8 +212,12 @@ station_name_count_member['count_total'] = np.where(~np.isnan(station_name_count
 # Let's reorganize it, rename the station name, and delete unnecessary columns
 station_name_count_member = station_name_count_member.rename(columns={'start_station_name': 'station_name'}) \
                                                    .drop(columns=['count_x', 'count_y', 'end_station_name'])
-                                                   
-                                                   
+
+
+#change count_total data type to int                                       
+station_name_count_member['count_total'] = station_name_count_member['count_total'].astype(int)                                                   
+
+
 # %%
 ## Data Analysis Part 3 - Most Popular Station Names for Casuals
 
@@ -247,6 +251,8 @@ station_name_count_casual['count_total'] = np.where(~np.isnan(station_name_count
 station_name_count_casual = station_name_count_casual.rename(columns={'start_station_name': 'station_name'}) \
                                                      .drop(columns=['count_x', 'count_y', 'end_station_name'])
 
+#change count_total data type to int
+station_name_count_casual['count_total'] = station_name_count_casual['count_total'].astype(int) 
 
 # %%
 ## Data Analysis Part 4 - Most Popular Days and Months
@@ -325,13 +331,13 @@ station_name_count_member_w_location_pre_cleaned  = pd.merge(station_name_count_
                                                     how='left', left_on='station_name', \
                                                         right_on='Station Name')\
                                                         .drop(columns=['Station Name', 'Total Docks', \
-                                                                       'Docks in Service', 'Status'])
+                                                                       'Docks in Service', 'Status', 'ID'])
                                                             
 station_name_count_casual_w_location_pre_cleaned  = pd.merge(station_name_count_casual, divvy_bicycle_stations, \
                                                     how='left', left_on='station_name', \
                                                         right_on='Station Name')\
                                                         .drop(columns=['Station Name', 'Total Docks', \
-                                                                       'Docks in Service', 'Status'])
+                                                                       'Docks in Service', 'Status', 'ID'])
                                                             
 # NOTE: You can fill missing latitude and longitude data manually if you want to
 
