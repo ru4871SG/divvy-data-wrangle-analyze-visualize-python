@@ -12,6 +12,19 @@ from bokeh.palettes import viridis
 
 import pydeck as pdk
 
+# CSS to fix the PyDeck map layout on mobile
+css = """
+<style>
+@media (max-width: 800px) {
+    .stDeckGlJsonChart {
+        margin-right: 30px !important;
+    }
+}
+</style>
+"""
+
+st.markdown(css, unsafe_allow_html=True)
+
 ### Import Data
 station_name_count_member_w_location = pd.read_pickle('station_name_count_member_w_location.pkl')
 station_name_count_casual_w_location = pd.read_pickle('station_name_count_casual_w_location.pkl')
