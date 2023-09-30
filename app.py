@@ -330,17 +330,14 @@ def display_popular_days():
                             is more popular for members")
     
 def display_popular_months():
-    st.subheader("Popular Months")    
-    tab1, tab2 = st.tabs(["Member", "Casual"])
-    
+    st.subheader("Popular Months")  
+    st.caption("Switch the tabs below to view different visualizations: 'Casual' for casual users and 'Member' for members.")
+    tab1, tab2 = st.tabs(["Casual", "Member"])
     with tab1:
-        st.bokeh_chart(viz_popular_month_count_member(sizing_mode="scale_width"))
+        st.bokeh_chart(viz_popular_month_count_casual(sizing_mode="scale_width"))
             
     with tab2:
-        st.bokeh_chart(viz_popular_month_count_casual(sizing_mode="scale_width"))
-    
-    st.caption('You can change the heatmap visualization above by using the tabs. Select the tab Casual to check\
-                the heatmap for casuals, and select the tab Member to check the heatmap for members')
+        st.bokeh_chart(viz_popular_month_count_member(sizing_mode="scale_width"))
     
     st.markdown("""
     Both heatmaps show\
@@ -360,18 +357,9 @@ def display_popular_months():
     
 def display_popular_stations():
     st.subheader("Popular Stations")
-    tab1, tab2 = st.tabs(["Member", "Casual"])
-    
+    st.caption("Switch the tabs below to view different visualizations: 'Casual' for casual users and 'Member' for members.")
+    tab1, tab2 = st.tabs(["Casual", "Member"])
     with tab1:
-        col1, col2 = st.columns([3, 1])
-    
-        with col1:
-            st.pydeck_chart(viz_pydeck_map(station_name_count_member_w_location))
-        
-        with col2:
-            generate_color_legend(station_name_count_member_w_location)
-            
-    with tab2:
         col1, col2 = st.columns([3, 1])
     
         with col1:
@@ -380,8 +368,14 @@ def display_popular_stations():
         with col2:
             generate_color_legend(station_name_count_casual_w_location)
             
-    st.caption('You can change the Pydeck interactive map above by using the tabs. Select the tab Casual to check\
-                the interactive map for casuals, and select the tab Member to check the interactive map for members')
+    with tab2:
+        col1, col2 = st.columns([3, 1])
+    
+        with col1:
+            st.pydeck_chart(viz_pydeck_map(station_name_count_member_w_location))
+        
+        with col2:
+            generate_color_legend(station_name_count_member_w_location)
     
     st.markdown("""
     The interactive map for members shows popular stations for members. Here we can see that the most popular stations \
