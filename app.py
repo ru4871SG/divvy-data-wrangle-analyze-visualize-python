@@ -459,8 +459,8 @@ if selection_menu == 'All':
     Divvy trip data from January 2022 to December 2022 were cleaned, transformed and analyzed using Python \
         libraries like ***numpy*** and ***pandas***. As for the data visualizations below, ***bokeh*** and ***pydeck*** \
             were used (all visualizations here are interactive). If you want to check how I cleaned and transformed the \
-                original data, you can check my [github repo here](https://github.com/ru4871SG/divvy-data-wrangle-analyze-visualize-python). I also have the Python script for the visualizations in \
-                    the same github repo.
+                original data, you can check my [github repo](https://github.com/ru4871SG/divvy-data-wrangle-analyze-visualize-python) \
+                    or [Kaggle notebook](https://www.kaggle.com/code/ruddygunawan/divvy-data-wrangle-analyze-visualize-python/notebook)
         """)
 
     st.header("Data Analysis Report:")
