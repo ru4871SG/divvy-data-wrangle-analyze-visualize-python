@@ -453,9 +453,6 @@ if selection_menu == 'All':
             the year of 2022.
     
     
-    The original data has been made available under this license: https://divvybikes.com/data-license-agreement
-    
-    
     Divvy trip data from January 2022 to December 2022 were cleaned, transformed and analyzed using Python \
         libraries like ***numpy*** and ***pandas***. As for the data visualizations below, ***bokeh*** and ***pydeck*** \
             were used (all visualizations here are interactive). If you want to check how I cleaned and transformed the \
