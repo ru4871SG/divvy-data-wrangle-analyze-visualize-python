@@ -8,7 +8,7 @@ The original data has been made available under this license: [https://divvybike
 
 Divvy trip data from January 2022 to December 2022 were cleaned, transformed, and analyzed using Python libraries like numpy and pandas. As for the data visualizations, bokeh and pydeck were used (all visualizations in the Streamlit web app are interactive). 
 
-## Repository Contents:##
+## Repository Contents:
 There are two Python scripts in this repo:
 
 **divvy.py** - This script provides all the data wrangling and analysis steps, transforming raw data into analyzable data frames. The Pickle files are the result of this script's operation.
